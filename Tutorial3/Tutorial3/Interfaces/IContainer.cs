@@ -1,14 +1,14 @@
-﻿using Tutorial3.Interfaces;
+﻿namespace Tutorial3;
 
-namespace Tutorial3;
+public interface IContainer
+{
+    double Mass { get; set; }
+    int Height { get; set; }
+    double TareWeight { get; set; }
+    int Depth { get; set; }
+    string SerialNumber { get; }
+    double MaxPayload { get; set; }
 
-public interface IContainer {
-    public class Container : Icontainer
-    {
-        
-        
-        
-        
-        
-    }
+    void LoadCargo(double cargoMass);
+    void EmptyCargo();
 }
