@@ -24,6 +24,10 @@ public class ContainerShipManager
             throw new IndexOutOfRangeException("Ship index is out of range.");
         }
     }
+    public IEnumerable<ContainerShip> GetAllShips()
+    {
+        return ships;
+    }
 
     public void AddContainerToShip(IContainer container, int shipIndex)
     {
@@ -45,6 +49,18 @@ public class ContainerShipManager
         else
         {
             throw new InvalidOperationException("Container not found on the source ship.");
+        }
+    }
+    
+    public void RemoveContainerFromShip(string serialNumber, int shipIndex)
+    {
+        if (shipIndex >= 0 && shipIndex < ships.Count)
+        {
+            ships[shipIndex].RemoveContainer(serialNumber);
+        }
+        else
+        {
+            throw new ArgumentOutOfRangeException("Ship index is out of range.");
         }
     }
 }

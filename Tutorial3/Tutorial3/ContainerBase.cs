@@ -15,6 +15,11 @@ public abstract class ContainerBase : IContainer
         this.serialNumber = $"KON-{type.ToUpper()}-{number}";
     }
 
+    public override string ToString()
+    {
+        return $"Serial Number: {SerialNumber}, Mass: {Mass} kg, Height: {Height} cm, Depth: {Depth} cm, Tare Weight: {TareWeight} kg, Max Payload: {MaxPayload} kg";
+    }
+    
     public abstract void LoadCargo(double cargoMass);
     public abstract void EmptyCargo();
 }

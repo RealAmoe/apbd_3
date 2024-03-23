@@ -4,18 +4,53 @@ public static class ContainerFactory
 {
     private static int nextSerialNumber = 1;
 
-    public static IContainer CreateContainer(string type, bool isHazardous, double pressure, string productType, double temperature)
+    public static IContainer CreateContainer(
+        string type,
+        int height,
+        int depth,
+        double tareWeight,
+        double maxPayload,
+        bool isHazardous = false,
+        double pressure = 0,
+        string productType = null,
+        double temperature = 0)
     {
         switch (type.ToUpper())
         {
             case "L":
-                return new LiquidContainer(nextSerialNumber++, isHazardous);
+                var liquidContainer = new LiquidContainer(GetNextSerialNumber(), isHazardous)
+                {
+                    Height = height,
+                    Depth = depth,
+                    TareWeight = tareWeight,
+                    MaxPayload = maxPayload
+                };
+                return liquidContainer;
             case "G":
-                return new GasContainer(nextSerialNumber++, pressure);
+                var gasContainer = new GasContainer(GetNextSerialNumber(), pressure)
+                {
+                    Height = height,
+                    Depth = depth,
+                    TareWeight = tareWeight,
+                    MaxPayload = maxPayload
+                };
+                return gasContainer;
             case "C":
-                return new RefrigeratedContainer(nextSerialNumber++, productType, temperature);
+                var refrigeratedContainer = new RefrigeratedContainer(GetNextSerialNumber(), productType, temperature)
+                {
+                    Height = height,
+                    Depth = depth,
+                    TareWeight = tareWeight,
+                    MaxPayload = maxPayload
+                };
+                return refrigeratedContainer;
             default:
                 throw new ArgumentException("Invalid container type specified.");
         }
+    }
+    
+    private static int GetNextSerialNumber()
+    {
+        return nextSerialNumber++;
     }
 }

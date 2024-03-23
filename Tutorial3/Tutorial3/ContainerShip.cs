@@ -27,42 +27,18 @@ public class ContainerShip
         Containers.Add(container);
     }
 
-    public void RemoveContainer(string serialNumber)
+    public bool RemoveContainer(string serialNumber)
     {
         var containerToRemove = Containers.FirstOrDefault(c => c.SerialNumber == serialNumber);
         if (containerToRemove != null)
         {
             Containers.Remove(containerToRemove);
+            return true;
         }
         else
         {
-            throw new InvalidOperationException("Container not found on the ship.");
-        }
-    }
-
-    public void LoadCargoToContainer(string serialNumber, double cargoMass)
-    {
-        var container = Containers.FirstOrDefault(c => c.SerialNumber == serialNumber);
-        if (container != null)
-        {
-            container.LoadCargo(cargoMass);
-        }
-        else
-        {
-            throw new InvalidOperationException("Container not found for loading cargo.");
-        }
-    }
-
-    public void UnloadContainer(string serialNumber)
-    {
-        var container = Containers.FirstOrDefault(c => c.SerialNumber == serialNumber);
-        if (container != null)
-        {
-            container.EmptyCargo();
-        }
-        else
-        {
-            throw new InvalidOperationException("Container not found for unloading.");
+            Console.WriteLine($"Container {serialNumber} not found on the ship.");
+            return false;
         }
     }
 
@@ -70,10 +46,17 @@ public class ContainerShip
 
     public void PrintShipInfo()
     {
-        Console.WriteLine($"Container Ship Info: Max Speed={MaxSpeed} knots, Max Containers={MaxContainerCount}, Max Weight={MaxWeight} tons, Current Weight={CurrentWeight / 1000} tons");
+        Console.WriteLine($"Ship Info: Max Speed={MaxSpeed} knots, Max Containers={MaxContainerCount}, Max Weight={MaxWeight} tons, Current Weight={CurrentWeight / 1000} tons");
+
+        if (Containers.Count == 0)
+        {
+            Console.WriteLine("No containers on board.");
+            return;
+        }
+
         foreach (var container in Containers)
         {
-            Console.WriteLine($"- Serial: {container.SerialNumber}, Type: {container.GetType().Name}, Cargo Mass: {container.Mass}kg");
+            Console.WriteLine(container.ToString());
         }
     }
 }
